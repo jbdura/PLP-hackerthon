@@ -37,7 +37,7 @@ export default async function Index() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {counties?.map((county) => (
             <div key={county.id} className="bg-gray-100 shadow-md rounded-lg p-6 hover:shadow-lg transition duration-300">
-              <Link legacyBehavior href={`/counties/${county.slug}`}>
+              <Link legacyBehavior href={`/counties/${county.name}`}>
                 <a className="text-xl font-semibold text-blue-600 hover:underline">
                   {county.name}
                 </a>

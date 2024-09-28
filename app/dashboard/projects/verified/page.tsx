@@ -29,11 +29,11 @@ export default function VerifiedProjects() {
     if (error) return <p>{error}</p>;
     if (!projects.length) return <p>No verified projects found.</p>;
 
+    
     const breadcrumbItems = [
         { label: 'Dashboard', url: '/dashboard' },
         { label: 'Projects', url: '/dashboard/projects' },
-        { label: 'Verified', url: '/dashboard/projects/verified' },
-        // { label: 'Project ID: $`{123}', url: null }, // Replace with dynamic ID if needed
+        { label: 'Verified projects', url: null },
     ];
 
     return (

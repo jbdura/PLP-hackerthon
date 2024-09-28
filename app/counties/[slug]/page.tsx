@@ -1,6 +1,8 @@
 import { axiosInstance } from "@/utils/supabase/axios";
 import Link from "next/link";
 
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
+
 export default async function CountyProjects({ params }: { params: { slug: string } }) {
   let projects = null;
   let error = null;
@@ -23,8 +25,19 @@ export default async function CountyProjects({ params }: { params: { slug: strin
     return <p>Error loading projects: {error}</p>;
   }
 
+  // breadcrumbs details
+  const countyName = decodeURIComponent(params.slug); // Assuming slug holds the county name
+
+  const breadcrumbItems = [
+    { label: 'Home', url: '/' },
+    { label: 'Counties', url: '/counties' },
+    { label: countyName + ' Projects', url: null }, // Replace with dynamic county name
+  ];
+
   return (
     <main className="p-8">
+      <Breadcrumb items={breadcrumbItems} />
+
       <h1 className="text-3xl font-bold mb-6">Projects in {params.slug}</h1>
       <div className="space-y-4">
         {projects?.length > 0 ? (

@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { axiosInstance } from "@/utils/supabase/axios";
 import { useRouter } from "next/navigation";
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 
 // Validation Schema using Yup
 const validationSchema = Yup.object().shape({
@@ -103,8 +104,19 @@ export default function ProjectEditForm({ params }: { params: { id: string } }) 
         }
     };
 
+    // Bread crumb details
+    const breadcrumbItems = [
+        { label: 'Dashboard', url: '/dashboard' },
+        { label: 'Projects', url: '/dashboard/projects' },
+        { label: 'Unverified', url: '/dashboard/projects/verified' },
+        { label: 'Edit project', url: null }, // Replace with dynamic ID if needed
+    ];
+
+
     return (
         <div className="max-w-lg mx-auto p-8 bg-slate-200 text-zinc-950 shadow-md rounded-md">
+            <Breadcrumb items={breadcrumbItems} />
+
             <h1 className="text-2xl font-bold mb-4">Edit Project</h1>
             {submitSuccess && <p className="text-green-600">{submitSuccess}</p>}
             {submitError && <p className="text-red-600">{submitError}</p>}

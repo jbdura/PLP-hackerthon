@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { axiosInstance } from "@/utils/supabase/axios";
 
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
+
+
 export default function UnverifiedProjects() {
     const [ projects, setProjects ] = useState([]);
     const [ error, setError ] = useState(null);
@@ -24,8 +27,18 @@ export default function UnverifiedProjects() {
     if (error) return <p>{error}</p>;
     if (!projects.length) return <p>No verified projects found.</p>;
 
+    const breadcrumbItems = [
+        { label: 'Dashboard', url: '/dashboard' },
+        { label: 'Projects', url: '/dashboard/projects' },
+        { label: 'Unverified', url: '/dashboard/projects/verified' },
+        // { label: 'Project ID: $`{123}', url: null }, // Replace with dynamic ID if needed
+    ];
+
+
     return (
         <main className="p-8">
+            <Breadcrumb items={breadcrumbItems} />
+
             <h1 className="text-2xl font-bold mb-6">Verified Projects</h1>
             <div className="space-y-4">
                 {projects.map((project) => (

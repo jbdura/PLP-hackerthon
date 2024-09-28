@@ -30,7 +30,6 @@ export default async function CountyProjects({ params }: { params: { slug: strin
 
   const breadcrumbItems = [
     { label: 'Home', url: '/' },
-    { label: 'Counties', url: '/counties' },
     { label: countyName + ' Projects', url: null }, // Replace with dynamic county name
   ];
 

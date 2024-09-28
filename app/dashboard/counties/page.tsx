@@ -6,7 +6,16 @@ import EditCountyForm from '@/components/counties/EditCountyForm';
 import CountyList from '@/components/counties/CountyList';
 import { axiosInstance } from '@/utils/supabase/axios';
 
+import Breadcrumb from "@/components/breadcrumb/Breadcrumb"
+
+
 export default function Dashboard() {
+
+    const breadcrumbItems = [
+        { label: 'Dashboard', url: '/dashboard' },
+        { label: 'Counties', url: '/dashboard/counties' },
+    ];
+
     const [ counties, setCounties ] = useState([]);
     const [ selectedCounty, setSelectedCounty ] = useState(null);
 
@@ -48,6 +57,8 @@ export default function Dashboard() {
 
     return (
         <main className="flex-1 flex flex-col gap-6 px-4">
+            <Breadcrumb items={breadcrumbItems} />
+
             <h2 className="font-medium text-xl mb-4">Admin Dashboard - Manage Counties</h2>
 
             {selectedCounty ? (

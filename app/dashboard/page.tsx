@@ -10,6 +10,7 @@ export default async function Dashboard() {
                 <h2 className="font-medium text-xl mb-4">Next steps</h2>
 
                 <Link href='/dashboard/counties'> Counties </Link>
+                <Link href='/dashboard/projects'> Projects </Link>
 
             </main>
         </>

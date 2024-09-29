@@ -41,6 +41,8 @@ export default function RootLayout({
                   </div>
 
                   <div className="flex items-center gap-2">
+                    <Link href={'/submit-report'}> Sumbit report </Link>
+
                     {/* Add Theme Switcher Here */}
                     <NavbarThemeSwitcher />
                   </div>

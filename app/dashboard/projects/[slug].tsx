@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { axiosInstance } from "@/utils/supabase/axios";
+import Link from "next/link";
 
 export default function ProjectDetails() {
     const router = useRouter();
@@ -40,8 +41,8 @@ export default function ProjectDetails() {
             )}
 
             <div className="flex space-x-4">
-                <Link href={`/dashboard/projects/${project.id}/edit`} passHref>
-                    <a className="text-green-600 hover:underline">Edit</a>
+                <Link href={`/dashboard/projects/${project.id}/edit`} passHref className="text-green-600 hover:underline">
+                    >Edit
                 </Link>
                 <button
                     onClick={() => handleDelete(project.id)}

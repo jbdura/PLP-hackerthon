@@ -42,7 +42,7 @@ export default function ProjectDetails() {
 
             <div className="flex space-x-4">
                 <Link href={`/dashboard/projects/${project.id}/edit`} passHref className="text-green-600 hover:underline">
-                    >Edit
+                    Edit
                 </Link>
                 <button
                     onClick={() => handleDelete(project.id)}

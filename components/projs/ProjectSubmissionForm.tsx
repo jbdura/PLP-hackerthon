@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { axiosInstance } from "@/utils/supabase/axios";
-import FileUpload from "./FileUpload"; // Import the file upload component
+// import FileUpload from "./FileUpload"; // Import the file upload component
 
 // Validation Schema using Yup
 const validationSchema = Yup.object().shape({

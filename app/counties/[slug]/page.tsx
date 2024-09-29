@@ -1,15 +1,21 @@
 import { axiosInstance } from "@/utils/supabase/axios";
 import Link from "next/link";
-
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 
+// Define the Project type according to your data structure
+type Project = {
+  id: string;
+  title: string;
+  description: string;
+};
+
 export default async function CountyProjects({ params }: { params: { slug: string } }) {
-  let projects = null;
-  let error = null;
+  let projects: Project[] | null = null;
+  let error: string | null = null;
 
   try {
     // Step 1: Fetch projects filtered by county and verification status on the server
-    const { data } = await axiosInstance.get('/projects', {
+    const { data } = await axiosInstance.get<Project[]>('/projects', {
       params: {
         county: `eq.${params.slug}`,
         verified: 'eq.true',
@@ -18,11 +24,10 @@ export default async function CountyProjects({ params }: { params: { slug: strin
 
     projects = data;
   } catch (err) {
-    // Safely cast the error to an instance of Error
     if (err instanceof Error) {
       error = err.message || 'Error fetching projects';
     } else {
-      error = 'Error fetching projects'; // Fallback if err is not an Error instance
+      error = 'Error fetching projects';
     }
   }
 
@@ -35,7 +40,7 @@ export default async function CountyProjects({ params }: { params: { slug: strin
 
   const breadcrumbItems = [
     { label: 'Home', url: '/' },
-    { label: countyName + ' Projects', url: undefined }, // Replace with dynamic county name
+    { label: countyName + ' Projects', url: undefined }, // Replace null with undefined
   ];
 
   return (
@@ -44,8 +49,8 @@ export default async function CountyProjects({ params }: { params: { slug: strin
 
       <h1 className="text-3xl font-bold mb-6">Projects in {params.slug}</h1>
       <div className="space-y-4">
-        {projects?.length > 0 ? (
-          projects.map((project) => (
+        {projects && projects.length > 0   ? (
+          projects.map((project: Project) => (
             <div key={project.id} className="border-b pb-4 mb-4">
               <Link href={`/projects/${project.id}`} className="text-2xl text-blue-600 hover:underline">
                 {project.title}
@@ -64,3 +69,71 @@ export default async function CountyProjects({ params }: { params: { slug: strin
     </main>
   );
 }
+
+
+// import { axiosInstance } from "@/utils/supabase/axios";
+// import Link from "next/link";
+
+// import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
+
+// export default async function CountyProjects({ params }: { params: { slug: string } }) {
+//   let projects = null;
+//   let error = null;
+
+//   try {
+//     // Step 1: Fetch projects filtered by county and verification status on the server
+//     const { data } = await axiosInstance.get('/projects', {
+//       params: {
+//         county: `eq.${params.slug}`,
+//         verified: 'eq.true',
+//       },
+//     });
+
+//     projects = data;
+//   } catch (err) {
+//     // Safely cast the error to an instance of Error
+//     if (err instanceof Error) {
+//       error = err.message || 'Error fetching projects';
+//     } else {
+//       error = 'Error fetching projects'; // Fallback if err is not an Error instance
+//     }
+//   }
+
+//   if (error) {
+//     return <p>Error loading projects: {error}</p>;
+//   }
+
+//   // breadcrumbs details
+//   const countyName = decodeURIComponent(params.slug); // Assuming slug holds the county name
+
+//   const breadcrumbItems = [
+//     { label: 'Home', url: '/' },
+//     { label: countyName + ' Projects', url: undefined }, // Replace with dynamic county name
+//   ];
+
+//   return (
+//     <main className="p-8">
+//       <Breadcrumb items={breadcrumbItems} />
+
+//       <h1 className="text-3xl font-bold mb-6">Projects in {params.slug}</h1>
+//       <div className="space-y-4">
+//         {projects?.length > 0 ? (
+//           projects.map((project) => (
+//             <div key={project.id} className="border-b pb-4 mb-4">
+//               <Link href={`/projects/${project.id}`} className="text-2xl text-blue-600 hover:underline">
+//                 {project.title}
+//               </Link>
+//               <p className="text-gray-500 mt-2">
+//                 {project.description.length > 100
+//                   ? `${project.description.slice(0, 100)}...`
+//                   : project.description}
+//               </p>
+//             </div>
+//           ))
+//         ) : (
+//           <p>No projects found for {params.slug}.</p>
+//         )}
+//       </div>
+//     </main>
+//   );
+// }

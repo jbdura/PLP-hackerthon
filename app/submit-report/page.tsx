@@ -6,20 +6,23 @@ import * as Yup from "yup";
 import axios from "axios";
 
 // Validation Schema using Yup
+// Validation Schema using Yup
 const validationSchema = Yup.object().shape({
     title: Yup.string().required("Project title is required"),
     county: Yup.string().required("County is required"),
     details: Yup.string().required("Details are required"),
-    images: Yup.mixed().required("Images are required").test(
-        "fileSize",
-        "Image should be less than 5 MB",
-        (value) => value && value.size <= 5 * 1024 * 1024
-    ),
-    documents: Yup.mixed().nullable().test(
-        "fileSize",
-        "Document should be less than 15 MB",
-        (value) => !value || (value && value.size <= 15 * 1024 * 1024)
-    ), // Marked as nullable so that it's optional
+    images: Yup.mixed()
+        .required("Images are required")
+        .test("fileSize", "Image should be less than 5 MB", (value) => {
+            if (!value) return false; // No file provided
+            return value instanceof File && value.size <= 5 * 1024 * 1024; // Ensure value is a File object
+        }),
+    documents: Yup.mixed()
+        .nullable()
+        .test("fileSize", "Document should be less than 15 MB", (value) => {
+            if (!value) return true; // Documents are optional
+            return value instanceof File && value.size <= 15 * 1024 * 1024; // Ensure value is a File object
+        }), // Marked as nullable so that it's optional
 });
 
 export default function SubmitReport() {

@@ -49,7 +49,7 @@ export default async function CountyProjects({ params }: { params: { slug: strin
 
       <h1 className="text-3xl font-bold mb-6">Projects in {params.slug}</h1>
       <div className="space-y-4">
-        {projects?.length > 0 ? (
+        {projects && projects.length > 0 ? (
           projects.map((project: Project) => (
             <div key={project.id} className="border-b pb-4 mb-4">
               <Link href={`/projects/${project.id}`} className="text-2xl text-blue-600 hover:underline">

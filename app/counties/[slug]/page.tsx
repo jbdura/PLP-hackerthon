@@ -18,7 +18,12 @@ export default async function CountyProjects({ params }: { params: { slug: strin
 
     projects = data;
   } catch (err) {
-    error = err.message || 'Error fetching projects';
+    // Safely cast the error to an instance of Error
+    if (err instanceof Error) {
+      error = err.message || 'Error fetching projects';
+    } else {
+      error = 'Error fetching projects'; // Fallback if err is not an Error instance
+    }
   }
 
   if (error) {
@@ -43,7 +48,7 @@ export default async function CountyProjects({ params }: { params: { slug: strin
           projects.map((project) => (
             <div key={project.id} className="border-b pb-4 mb-4">
               <Link href={`/projects/${project.id}`} className="text-2xl text-blue-600 hover:underline">
-                  {project.title}
+                {project.title}
               </Link>
               <p className="text-gray-500 mt-2">
                 {project.description.length > 100

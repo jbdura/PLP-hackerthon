@@ -1,3 +1,6 @@
+'use client';
+
+import ShareButton from "@/components/ShareButton";
 import { axiosInstance } from "@/utils/supabase/axios";
 
 export default async function ProjectDetails({ params }: { params: { id: string } }) {
@@ -19,6 +22,8 @@ export default async function ProjectDetails({ params }: { params: { id: string 
     if (!project) {
         return <p>Project not found</p>;
     }
+
+    const shareUrl = `${process.env.NEXT_PUBLIC_APP_URL}/projects/${project.id}`;
 
     return (
         <main className="p-8">
@@ -76,6 +81,15 @@ export default async function ProjectDetails({ params }: { params: { id: string 
             )}
 
             <p className="text-sm text-gray-500">Created at: {new Date(project.created_at).toLocaleDateString()}</p>
+            
+            {/* Share Button */}
+            <div className="mt-6">
+                <ShareButton
+                    title={project.title}
+                    text={project.description}
+                    url={shareUrl}
+                />
+            </div>
         </main>
     );
 }

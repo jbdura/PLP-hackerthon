@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import Breadcrumb from "@/components/breadcrumb/Breadcrumb";
 
 // Validation Schema using Yup
+// Validation Schema using Yup
 const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     county: Yup.string().required("County is required"),
@@ -16,16 +17,17 @@ const validationSchema = Yup.object().shape({
     description: Yup.string().required("Description is required"),
     docs: Yup.mixed()
         .test("fileSize", "Docs should be less than 15 MB", (value) => {
-            if (!value) return true; // No file upload
-            return value.size <= 15 * 1024 * 1024;
+            if (!value) return true; // No file uploaded
+            return value instanceof File && value.size <= 15 * 1024 * 1024; // Ensure value is a File object
         }),
     images: Yup.mixed()
         .test("fileSize", "Image should be less than 5 MB", (value) => {
-            if (!value) return true; // No file upload
-            return value.size <= 5 * 1024 * 1024;
+            if (!value) return true; // No file uploaded
+            return value instanceof File && value.size <= 5 * 1024 * 1024; // Ensure value is a File object
         }),
     verified: Yup.boolean(),
 });
+
 
 export default function ProjectEditForm({ params }: { params: { id: string } }) {
     const { id } = params;

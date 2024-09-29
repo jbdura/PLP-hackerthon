@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import nodemailer from "nodemailer";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req, res) {
     if (req.method !== "POST") {
         return res.status(405).json({ message: "Method not allowed" });
     }
@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Configure Nodemailer
         let transporter = nodemailer.createTransport({
             host: process.env.NODEMAILER_HOST,
-            port: parseInt(process.env.NODEMAILER_PORT || "587", 10),
+            port: process.env.NODEMAILER_PORT,
             secure: process.env.NODEMAILER_SECURE === "true", // true for 465, false for other ports
             auth: {
                 user: process.env.NODEMAILER_USER,
